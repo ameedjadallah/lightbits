@@ -1,4 +1,5 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). & [NodeJS](https://nodejs.org/en/)
+so please make sure to install nodejs on your device before you continue
 
 ## Available Scripts
 

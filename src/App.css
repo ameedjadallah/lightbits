@@ -1,0 +1,28 @@
+body {
+  background: #efefef;
+}
+
+.d-flex {
+  display: flex;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.align-center {
+  align-items: center;
+}
+.btn {
+  border : none;
+  background: #a3a3a3;
+  padding : 0.5em 1em;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.btn.btn-primary {
+  background: #442744;
+  color : #fff;
+}
+.logo-section {
+  margin : 3em auto 0;
+  text-align: center;
+}

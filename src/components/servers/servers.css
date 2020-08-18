@@ -1,0 +1,51 @@
+.servers {
+    max-width: 900px;
+    margin: 1em auto 0;
+}
+.servers-header {
+    height: 60px;
+}
+.header-actions {
+    list-style: none;
+    padding: 0;
+    margin : 0;
+}
+.header-title {
+    margin : 0;
+    color : #442744;
+}
+.header-actions .item {
+    margin-left : 1em;
+}
+
+.MuiDialog-paper {
+    min-width: 600px;
+}
+
+.range-fields >div {
+    width : 45%;
+}
+.range-fields .MuiFormControl-root {
+    width : 100%;
+}
+.dialog-actions {
+ margin-top : 3em; 
+}
+
+.dialog-divider {
+    margin-top : 2em;
+}
+.alert-section {
+    position: fixed;
+    bottom : 2em;
+    right: 2em;
+    text-align: center;
+}
+
+.empty-list {
+    text-align: center;
+    margin: 2em auto 0;
+    font-weight: bold;
+    color: #acacac;
+    font-size: 18px;
+}

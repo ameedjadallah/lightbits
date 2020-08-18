@@ -32,7 +32,7 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Instalation and Run
+### installation and Running Project
 
 To install the project and run it please do first 
 

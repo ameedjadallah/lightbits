@@ -1,0 +1,2 @@
+# lightbits
+Lightbits server manager

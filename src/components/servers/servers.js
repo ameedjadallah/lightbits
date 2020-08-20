@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaTrash } from 'react-icons/fa';
+import { FaDownload, FaTrash } from 'react-icons/fa';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -18,6 +18,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import Alert from '@material-ui/lab/Alert';
 import axios from 'axios';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import './servers.css';
 
@@ -40,14 +41,15 @@ class Servers extends React.Component {
       ],
       showModal: false,
       open : false,
-      name: null,
+      name: 'server0',
       ip: '',
       password: 'testpass',
-      range1: null,
-      range2:null,
+      range1: '',
+      range2:'',
       isValidIp : true,
       isValidRange1 : true,
       isValidRange2 : true,
+      isValidServerName: true,
       successMesssage: '',
       success: false
     };
@@ -58,10 +60,26 @@ class Servers extends React.Component {
     this.setState({
       [event.target.name]: event.target.value
     });
+    
+
+    if (event.target.name === "name") {
+      this.isServerNameValid(event.target.value);
+    }
+  }
+
+  ValidateServerName = (server) => {
+    
+    if (server.startsWith("server0")) {
+      
+      return (true)
+    } else {
+      
+      return (false);
+    }
   }
   
   ValidateIPaddress = (ipaddress) => {
-    if (/^(25[0-5]|2[0-4][0-9]|[1]?[1-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[1]?[1-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[1]?[1-9][0-9]?)\.(25[1-5]|2[0-4][0-9]|[1]?[1-9][0-9]?)$/.test(ipaddress) || !ipaddress.length) {  
+    if (/^(25[0-5]|2[0-4][0-9]|[01]?[1-9][0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[1-9][0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[1]?[1-9][0-9][0-9]?)\.(25[1-5]|2[0-4][0-9]|[0]?[1-9][0-9][0-9]?)$/.test(ipaddress) || !ipaddress.length) {  
       return (true)  
     }
     return (false)  
@@ -95,6 +113,16 @@ class Servers extends React.Component {
         isValidRange2
       };
     }); 
+  }
+
+  isServerNameValid = (server) => {
+    this.setState(state => {
+      const isValidServerName = this.ValidateServerName(server);
+
+      return {
+        isValidServerName
+      }
+    })
   }
 
   handleIP = (event) => {
@@ -167,21 +195,33 @@ class Servers extends React.Component {
         }
       })
       .then(res => {
-        console.log(res);
-      })
+        this.showSuccessMessage("YML file is generated for all servers");
+      })   
+  }
 
-      this.showSuccessMessage("YML file is generated for all servers");
+  generateYamlFile(server) {
+
+    axios.get(`http://localhost:3030/generate`,{
+        params: {
+          name: server.name,
+          ip: server.ip,
+          password: server.password
+        }
+      })
+      .then(res => {
+        this.showSuccessMessage("Yaml file generated successfully");
+      })
   }
 
   addServer = () => {
     // show add modal
     const state = this.state;
 
-    if ( !state.isValidIp || !state.isValidRange1 || !state.isValidRange2 ) {
+    if ( !state.isValidServerName || !state.isValidIp || !state.isValidRange1 || !state.isValidRange2 ) {
       return;
     }
 
-    if ( state.range1 != null && state.range2 != null ) {
+    if ( state.range1.length !== 0 && state.range2.length !== 0 ) {
 
       // get last digit in range 1
       let range1 = state.range1;
@@ -231,17 +271,7 @@ class Servers extends React.Component {
         };
       });
 
-      axios.get(`http://localhost:3030/generate`,{
-        params: {
-          name: state.name,
-          ip: state.ip,
-          password: state.password
-        }
-      })
-      .then(res => {
-        console.log(res);
-      })
-
+      
       this.logServer("added",newServer);
       this.logServer(undefined,"ansible -i hosts all -m ping");
 
@@ -271,6 +301,7 @@ class Servers extends React.Component {
       this.logServer("deleted",this.state.rows[index]);
       array.splice(index, 1);
       this.setState({rows: array});
+      this.showSuccessMessage("server deleted successfully");
     }
   }
 
@@ -297,7 +328,7 @@ class Servers extends React.Component {
         success: false,
         successMesssage : ''
       });
-    }, 2000)
+    }, 4000);
   }
   
   render(){
@@ -325,6 +356,8 @@ class Servers extends React.Component {
         >
           <DialogTitle id="alert-dialog-slide-title">{"Add Server"}</DialogTitle>
           <DialogContent>
+            
+          
             <TextField
               margin="dense"
               id="name"
@@ -335,6 +368,10 @@ class Servers extends React.Component {
               value={this.state.name}
               onChange={this.onInputchange}
             />
+            {!this.state.isValidServerName && <Alert severity="error">Server name should start with <b>(server0)</b></Alert>}
+            
+
+
             <TextField
               margin="dense"
               id="server-ip"
@@ -439,9 +476,18 @@ class Servers extends React.Component {
                   </TableCell>
                   <TableCell align="left">{row.ip}</TableCell>
                   <TableCell align="right">
-                    <Button onClick={this.removeServer.bind(this, index)} color="primary">
+                  <Tooltip title="Export to yaml file">
+                    <Button onClick={this.generateYamlFile.bind(this, row)} color="primary">
+                      <FaDownload/>
+                    </Button>
+                  </Tooltip>
+                  <Tooltip title="Delete server">
+                    <Button onClick={this.removeServer.bind(this, index)} color="secondary">
                       <FaTrash/>
                     </Button>
+                  </Tooltip>
+                    
+                    
                   </TableCell>
                 </TableRow>
               ))}

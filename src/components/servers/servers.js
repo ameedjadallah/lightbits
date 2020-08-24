@@ -38,8 +38,6 @@ class Servers extends React.Component {
     super(props);
     this.state = {
       rows: [
-        createData("server0ameed","12.12.12.10","testpass"),
-        createData("server0hanaa","123.124.126.10","testpass"),
       ],
       showModal: false,
       open : false,

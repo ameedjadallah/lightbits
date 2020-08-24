@@ -29,6 +29,20 @@ app.get("/generate", (req, res, next) => {
   let fileName = "yaml/" + req.query.name + '.yaml';
   fs.writeFileSync(fileName, yamlStr, 'utf8');
 
+    res.setHeader('Access-Control-Allow-Origin', req.protocol + "://" + req.hostname + ":3000" );
+
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
+    res.send({data : "success"});
+
  });
 
  app.get("/generateAll", (req, res, next) => {
@@ -56,6 +70,22 @@ app.get("/generate", (req, res, next) => {
   let yamlStr = yaml.safeDump(data);
   let fileName = 'yaml/all-servers.yaml';
   fs.writeFileSync(fileName, yamlStr, 'utf8');
+
+  res.setHeader('Access-Control-Allow-Origin', req.protocol + "://" + req.hostname + ":3000");
+
+  // Request methods you wish to allow
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+  // Request headers you wish to allow
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+  // Set to true if you need the website to include cookies in the requests sent
+  // to the API (e.g. in case you use sessions)
+  res.setHeader('Access-Control-Allow-Credentials', true);
+
+
+  res.send({data : "success"});
+
 
  });
 

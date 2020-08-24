@@ -38,6 +38,8 @@ class Servers extends React.Component {
     super(props);
     this.state = {
       rows: [
+        createData("server0ameed","12.12.12.10","testpass"),
+        createData("server0hanaa","123.124.126.10","testpass"),
       ],
       showModal: false,
       open : false,
@@ -52,7 +54,13 @@ class Servers extends React.Component {
       isValidServerName: true,
       successMesssage: '',
       success: false,
-      serverURL: "http://"+ window.location.hostname + ":3030"
+      serverURL: "http://"+ window.location.hostname + ":3030",
+      headers: {
+        'Access-Control-Allow-Origin' : window.location.href,
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE',
+        'Access-Control-Allow-Headers':  'X-Requested-With,content-type',
+        'Access-Control-Allow-Credentials': true
+      }
     };
   }
 

@@ -51,9 +51,9 @@ class Servers extends React.Component {
       isValidRange2 : true,
       isValidServerName: true,
       successMesssage: '',
-      success: false
+      success: false,
+      serverURL: "http://"+ window.location.hostname + ":3030"
     };
-
   }
 
   onInputchange = (event) => {
@@ -189,7 +189,7 @@ class Servers extends React.Component {
   generateAllYaml = () => {
     const state = this.state;
     
-    axios.get(`http://localhost:3030/generateAll`,{
+    axios.get(`${state.serverURL}/generateAll`,{
         params: {
           rows: state.rows
         }
@@ -200,8 +200,9 @@ class Servers extends React.Component {
   }
 
   generateYamlFile(server) {
+    const state = this.state;
 
-    axios.get(`http://localhost:3030/generate`,{
+    axios.get(`${state.serverURL}/generate`,{
         params: {
           name: server.name,
           ip: server.ip,
@@ -242,7 +243,7 @@ class Servers extends React.Component {
           };
         });
 
-        axios.get(`http://localhost:3030/generate`,{
+        axios.get(`${state.serverURL}/generate`,{
           params: {
             name: state.name + "" + (i-1),
             ip: range + "" + i,
@@ -306,9 +307,10 @@ class Servers extends React.Component {
   }
 
   logServer(status, server) {
-
+    const state = this.state;
     let logMessage = status === undefined ? "ansible -i hosts all -m ping" : status + " " + server.name + " , ip:" + server.ip;
-    axios.get(`http://localhost:3030/log`,{
+
+    axios.get(`${state.serverURL}/log`,{
         params: {
           log: logMessage
         }

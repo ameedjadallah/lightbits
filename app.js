@@ -6,6 +6,10 @@ app.listen(3030, () => {
  console.log("Server running on port 3000");
 });
 
+app.get("/", (req, res, next) => {
+  res.send("Node is Working");
+})
+
 app.get("/generate", (req, res, next) => {
 
   let data = {

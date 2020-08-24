@@ -1,4 +1,4 @@
-- server: Ameed
+- server: server0
   ansible_host: 123.123.123.3
   ansible_connection: ssh
   ansible_ssh_user: root

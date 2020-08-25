@@ -1,12 +1,5 @@
-- server: server0ameed
-  ansible_host: 12.12.12.10
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server0hanaa
-  ansible_host: 123.124.126.10
+- server: server
+  ansible_host: 123.123.123.3
   ansible_connection: ssh
   ansible_ssh_user: root
   ansible_ssh_pass: testpass

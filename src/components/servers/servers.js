@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaDownload, FaTrash } from 'react-icons/fa';
+import { FaTrash } from 'react-icons/fa';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -41,7 +41,7 @@ class Servers extends React.Component {
       ],
       showModal: false,
       open : false,
-      name: 'server0',
+      name: 'server',
       ip: '',
       password: 'testpass',
       range1: '',
@@ -75,7 +75,7 @@ class Servers extends React.Component {
 
   ValidateServerName = (server) => {
     
-    if (server.startsWith("server0")) {
+    if (server.startsWith("server")) {
       
       return (true)
     } else {
@@ -204,6 +204,10 @@ class Servers extends React.Component {
         this.showSuccessMessage("YML file is generated for all servers");
       })   
   }
+  done = () => {
+    this.logServer(undefined,"ansible -i hosts all -m ping");
+    this.showSuccessMessage("You've done!");
+  }
 
   generateYamlFile(server) {
     const state = this.state;
@@ -237,11 +241,17 @@ class Servers extends React.Component {
       let lastIndexRange2 = range2.lastIndexOf(".");
       let startRange = parseInt(range1.substring(lastIndexRange1+ 1));
       let endRange = parseInt(range2.substring(lastIndexRange2+ 1));
-
       let range = range1.substring(0,range1.lastIndexOf(".")+1);
+      let count = 0;
+
+      if (startRange > endRange) {
+        startRange = startRange ^ endRange;
+        endRange = startRange ^ endRange;
+        startRange = startRange ^ endRange;
+      }
 
       for (let i = startRange; i<= endRange; i++ ) {
-        let newServer = createData(state.name + "" + (i-1), range + "" + i, state.password);
+        let newServer = createData(state.name + "" + (count++), range + "" + i, state.password);
         this.setState(state => {
           const rows = state.rows.concat(newServer);
           return {
@@ -249,19 +259,8 @@ class Servers extends React.Component {
           };
         });
 
-        axios.get(`${state.serverURL}/generate`,{
-          params: {
-            name: state.name + "" + (i-1),
-            ip: range + "" + i,
-            password: state.password
-          }
-        })
-        .then(res => {
-          console.log(res);
-        })
-
         this.logServer("added",newServer);
-        this.logServer(undefined,"ansible -i hosts all -m ping");
+        
         
       }
       this.handleClose();
@@ -280,9 +279,6 @@ class Servers extends React.Component {
 
       
       this.logServer("added",newServer);
-      this.logServer(undefined,"ansible -i hosts all -m ping");
-
-
       this.handleClose();
     }
 
@@ -376,7 +372,7 @@ class Servers extends React.Component {
               value={this.state.name}
               onChange={this.onInputchange}
             />
-            {!this.state.isValidServerName && <Alert severity="error">Server name should start with <b>(server0)</b></Alert>}
+            {!this.state.isValidServerName && <Alert severity="error">Server name should start with <b>(server)</b></Alert>}
             
 
 
@@ -453,14 +449,19 @@ class Servers extends React.Component {
           <h2 className="header-title">Servers</h2>
           <ul className="header-actions d-flex">
             <li className="item">
-            <Button onClick={this.handleOpen} color="primary" variant="contained">
-              Add
-            </Button>
+              <Button onClick={this.handleOpen} color="primary" variant="contained">
+                Add
+              </Button>
             </li>
             <li className="item">
-            <Button onClick={this.generateAllYaml} color="default" variant="contained" disabled={!this.state.rows.length}>
-              Export to YML
-            </Button>
+              <Button onClick={this.generateAllYaml} color="default" variant="contained" disabled={!this.state.rows.length}>
+                Export to YML
+              </Button>
+            </li>
+            <li className="item">
+              <Button onClick={this.done} color="secondary" variant="contained" disabled={!this.state.rows.length}>
+                Done
+              </Button>
             </li>
           </ul>
         </div>
@@ -484,11 +485,6 @@ class Servers extends React.Component {
                   </TableCell>
                   <TableCell align="left">{row.ip}</TableCell>
                   <TableCell align="right">
-                  <Tooltip title="Export to yaml file">
-                    <Button onClick={this.generateYamlFile.bind(this, row)} color="primary">
-                      <FaDownload/>
-                    </Button>
-                  </Tooltip>
                   <Tooltip title="Delete server">
                     <Button onClick={this.removeServer.bind(this, index)} color="secondary">
                       <FaTrash/>

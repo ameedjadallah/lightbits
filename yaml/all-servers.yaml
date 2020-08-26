@@ -1,5 +1,5 @@
 - server: server
-  ansible_host: 123.123.123.3
+  ansible_host: 10.10.10.1
   ansible_connection: ssh
   ansible_ssh_user: root
   ansible_ssh_pass: testpass

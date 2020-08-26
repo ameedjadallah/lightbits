@@ -1,0 +1,18 @@
+[
+  {
+    "title": "Server Name",
+    "type": "text",
+    "name": "name",
+    "id": "name",
+    "default": "server",
+    "showOnTable": true
+  },
+  {
+    "title": "Server Password",
+    "type": "password",
+    "name": "password",
+    "id": "server-password",
+    "default": "testpass",
+    "showOnTable": false
+  }
+]

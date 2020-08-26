@@ -20,17 +20,14 @@ import Alert from '@material-ui/lab/Alert';
 import axios from 'axios';
 import Tooltip from '@material-ui/core/Tooltip';
 
+import sections from '../../assets/json/sections.json';
+
 import './servers.css';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-
-function createData(name, ip, password) {
-  return { name, ip, password };
-}
-
 
 class Servers extends React.Component {
 
@@ -41,9 +38,8 @@ class Servers extends React.Component {
       ],
       showModal: false,
       open : false,
-      name: 'server',
+      sectionsForm:[],
       ip: '',
-      password: 'testpass',
       range1: '',
       range2:'',
       isValidIp : true,
@@ -60,6 +56,14 @@ class Servers extends React.Component {
         'Access-Control-Allow-Credentials': true
       }
     };
+
+    // init section fields from JSON file
+    this.state.sectionsForm = sections;
+
+    sections.forEach(section => {
+      // eslint-disable-next-line
+      this.state[section.name] = section.default;
+    });
   }
 
   onInputchange = (event) => {
@@ -209,21 +213,6 @@ class Servers extends React.Component {
     this.showSuccessMessage("You've done!");
   }
 
-  generateYamlFile(server) {
-    const state = this.state;
-
-    axios.get(`${state.serverURL}/generate`,{
-        params: {
-          name: server.name,
-          ip: server.ip,
-          password: server.password
-        }
-      })
-      .then(res => {
-        this.showSuccessMessage("Yaml file generated successfully");
-      })
-  }
-
   addServer = () => {
     // show add modal
     const state = this.state;
@@ -242,35 +231,45 @@ class Servers extends React.Component {
       let startRange = parseInt(range1.substring(lastIndexRange1+ 1));
       let endRange = parseInt(range2.substring(lastIndexRange2+ 1));
       let range = range1.substring(0,range1.lastIndexOf(".")+1);
-      let count = 0;
+      
 
       if (startRange > endRange) {
         startRange = startRange ^ endRange;
-        endRange = startRange ^ endRange;
+        endRange   = startRange ^ endRange;
         startRange = startRange ^ endRange;
       }
 
+      
+      let count = 0;
       for (let i = startRange; i<= endRange; i++ ) {
-        let newServer = createData(state.name + "" + (count++), range + "" + i, state.password);
+        let serverObject = {};
+        state.sectionsForm.forEach((field) => {
+          serverObject[field.name] = field.name === "name" ? state[field.name] + "" + (count++) : state[field.name]; 
+        });
+      
+        serverObject.ip = range + "" + i;
+
         this.setState(state => {
-          const rows = state.rows.concat(newServer);
+          const rows = state.rows.concat(serverObject);
           return {
             rows
           };
         });
 
-        this.logServer("added",newServer);
-        
-        
+        this.logServer("added",serverObject);
       }
       this.handleClose();
 
     } else {
       // add to servers list
       const state = this.state;
-      let newServer = createData(state.name, state.ip, state.password);
+      let serverObject = {}
+      state.sectionsForm.forEach((field) => {
+        serverObject[field.name] = state[field.name];
+      })
+      serverObject.ip = state.ip;
       this.setState(state => {
-        const rows = state.rows.concat(newServer);
+        const rows = state.rows.concat(serverObject);
    
         return {
           rows
@@ -278,7 +277,7 @@ class Servers extends React.Component {
       });
 
       
-      this.logServer("added",newServer);
+      this.logServer("added",serverObject);
       this.handleClose();
     }
 
@@ -311,7 +310,6 @@ class Servers extends React.Component {
   logServer(status, server) {
     const state = this.state;
     let logMessage = status === undefined ? "ansible -i hosts all -m ping" : status + " " + server.name + " , ip:" + server.ip;
-
     axios.get(`${state.serverURL}/log`,{
         params: {
           log: logMessage
@@ -361,20 +359,28 @@ class Servers extends React.Component {
           <DialogTitle id="alert-dialog-slide-title">{"Add Server"}</DialogTitle>
           <DialogContent>
             
-          
-            <TextField
-              margin="dense"
-              id="name"
-              label="Server Name"
-              type="text"
-              name="name"
-              fullWidth
-              value={this.state.name}
-              onChange={this.onInputchange}
-            />
-            {!this.state.isValidServerName && <Alert severity="error">Server name should start with <b>(server)</b></Alert>}
-            
 
+              {this.state.sectionsForm.map((section, index) =>(
+                <div key={index}>
+                  <TextField
+                  
+                  margin="dense"
+                  id={section.id}
+                  label={section.title}
+                  type={section.type}
+                  name={section.name}
+                  fullWidth
+                  value={this.state[section.name]}
+                  onChange={this.onInputchange}
+                />
+                 { section.name === "name" && !this.state.isValidServerName && <Alert severity="error">Server name should start with <b>(server)</b></Alert>}
+                
+                { section.name === "password" && <small><b>Note:</b> password will set "testpass" as default pass if you left this field empty</small>}
+              
+                </div>
+              
+                ))}
+          
 
             <TextField
               margin="dense"
@@ -420,17 +426,8 @@ class Servers extends React.Component {
               
             </div>
 
-            <TextField
-              margin="dense"
-              id="server-password"
-              label="Server Password"
-              type="password"
-              name="password"
-              fullWidth
-              value={this.state.password}
-              onChange={this.onInputchange}
-            />
-            <small><b>Note:</b> password will set "testpass" as default pass if you left this field empty</small>
+            
+            
 
             
           </DialogContent>
@@ -472,7 +469,10 @@ class Servers extends React.Component {
           <Table className="table" aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell align="left">Server Name</TableCell>
+                
+                {this.state.sectionsForm.map((header, index) => {
+                  return header.showOnTable && <TableCell key={index} align="left">{header.title}</TableCell>
+                })}
                 <TableCell align="left">Server IP</TableCell>
                 <TableCell align="right"></TableCell>
               </TableRow>
@@ -480,9 +480,13 @@ class Servers extends React.Component {
             <TableBody>
               {this.state.rows.map((row, index) => (
                 <TableRow key={index}>
-                  <TableCell component="th" scope="row" align="left">
-                    {row.name}
-                  </TableCell>
+                  
+                  { this.state.sectionsForm.map((item, index) => {
+                    return item.showOnTable &&
+                    <TableCell key={index} component="th" scope="row" align="left">
+                      {row[item.name]}
+                    </TableCell>
+                  })}
                   <TableCell align="left">{row.ip}</TableCell>
                   <TableCell align="right">
                   <Tooltip title="Delete server">

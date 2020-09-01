@@ -240,12 +240,13 @@ class Servers extends React.Component {
       }
 
       
-      let count = 0;
+      let count = startRange;
       for (let i = startRange; i<= endRange; i++ ) {
         let serverObject = {};
-        state.sectionsForm.forEach((field) => {
-          serverObject[field.name] = field.name === "name" ? state[field.name] + "" + (count++) : state[field.name]; 
+        state.sectionsForm.forEach((field) => {     
+          serverObject[field.name] = field.name === "name" ? state[field.name] + "" + (i - count) : state[field.name]; 
         });
+        
       
         serverObject.ip = range + "" + i;
 

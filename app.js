@@ -53,15 +53,7 @@ app.get("/generate", (req, res, next) => {
     
     let row = JSON.parse(req.query.rows[i]);
 
-    data.push({
-      server: row.name,
-      ansible_host: row.ip,
-      ansible_connection: 'ssh',
-      ansible_ssh_user: 'root',
-      ansible_ssh_pass: row.password,
-      ansible_become_user: 'root',
-      ansible_become_pass: row.password
-    })
+    data.push(row);
   }
 
   const fs = require('fs');
@@ -91,12 +83,9 @@ app.get("/generate", (req, res, next) => {
 
 app.get("/log", (req, res, next) => {
 
-  console.log(req.query.log);
-
   const log = require('log-to-file');
   
   log(req.query.log, 'logFile.log');
-
 
   res.setHeader('Access-Control-Allow-Origin', req.protocol + "://" + req.hostname + ":3000");
 

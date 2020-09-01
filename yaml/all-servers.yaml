@@ -1,350 +1,72 @@
-- server: server0
-  ansible_host: 10.10.10.1
+- server: server
+  ansible_host: 123.123.123.3
   ansible_connection: ssh
   ansible_ssh_user: root
   ansible_ssh_pass: testpass
   ansible_become_user: root
   ansible_become_pass: testpass
-- server: server1
-  ansible_host: 10.10.10.2
+  nic_name: hanaa
+- server: servertest0
+  ansible_host: 123.123.123.3
   ansible_connection: ssh
   ansible_ssh_user: root
   ansible_ssh_pass: testpass
   ansible_become_user: root
   ansible_become_pass: testpass
-- server: server2
-  ansible_host: 10.10.10.3
+  nic_name: hanaa
+- server: servertest1
+  ansible_host: 123.123.123.4
   ansible_connection: ssh
   ansible_ssh_user: root
   ansible_ssh_pass: testpass
   ansible_become_user: root
   ansible_become_pass: testpass
-- server: server3
-  ansible_host: 10.10.10.4
+  nic_name: hanaa
+- server: servertest2
+  ansible_host: 123.123.123.5
   ansible_connection: ssh
   ansible_ssh_user: root
   ansible_ssh_pass: testpass
   ansible_become_user: root
   ansible_become_pass: testpass
-- server: server4
-  ansible_host: 10.10.10.5
+  nic_name: hanaa
+- server: servertest3
+  ansible_host: 123.123.123.6
   ansible_connection: ssh
   ansible_ssh_user: root
   ansible_ssh_pass: testpass
   ansible_become_user: root
   ansible_become_pass: testpass
-- server: server5
-  ansible_host: 10.10.10.6
+  nic_name: hanaa
+- server: servertest4
+  ansible_host: 123.123.123.7
   ansible_connection: ssh
   ansible_ssh_user: root
   ansible_ssh_pass: testpass
   ansible_become_user: root
   ansible_become_pass: testpass
-- server: server6
-  ansible_host: 10.10.10.7
+  nic_name: hanaa
+- server: servertest5
+  ansible_host: 123.123.123.8
   ansible_connection: ssh
   ansible_ssh_user: root
   ansible_ssh_pass: testpass
   ansible_become_user: root
   ansible_become_pass: testpass
-- server: server7
-  ansible_host: 10.10.10.8
+  nic_name: hanaa
+- server: servertest6
+  ansible_host: 123.123.123.9
   ansible_connection: ssh
   ansible_ssh_user: root
   ansible_ssh_pass: testpass
   ansible_become_user: root
   ansible_become_pass: testpass
-- server: server8
-  ansible_host: 10.10.10.9
+  nic_name: hanaa
+- server: servertest7
+  ansible_host: 123.123.123.10
   ansible_connection: ssh
   ansible_ssh_user: root
   ansible_ssh_pass: testpass
   ansible_become_user: root
   ansible_become_pass: testpass
-- server: server9
-  ansible_host: 10.10.10.10
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server10
-  ansible_host: 10.10.10.11
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server11
-  ansible_host: 10.10.10.12
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server12
-  ansible_host: 10.10.10.13
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server13
-  ansible_host: 10.10.10.14
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server14
-  ansible_host: 10.10.10.15
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server15
-  ansible_host: 10.10.10.16
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server16
-  ansible_host: 10.10.10.17
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server17
-  ansible_host: 10.10.10.18
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server18
-  ansible_host: 10.10.10.19
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server19
-  ansible_host: 10.10.10.20
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server20
-  ansible_host: 10.10.10.21
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server21
-  ansible_host: 10.10.10.22
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server22
-  ansible_host: 10.10.10.23
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server23
-  ansible_host: 10.10.10.24
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server24
-  ansible_host: 10.10.10.25
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server25
-  ansible_host: 10.10.10.26
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server26
-  ansible_host: 10.10.10.27
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server27
-  ansible_host: 10.10.10.28
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server28
-  ansible_host: 10.10.10.29
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server29
-  ansible_host: 10.10.10.30
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server30
-  ansible_host: 10.10.10.31
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server31
-  ansible_host: 10.10.10.32
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server32
-  ansible_host: 10.10.10.33
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server33
-  ansible_host: 10.10.10.34
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server34
-  ansible_host: 10.10.10.35
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server35
-  ansible_host: 10.10.10.36
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server36
-  ansible_host: 10.10.10.37
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server37
-  ansible_host: 10.10.10.38
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server38
-  ansible_host: 10.10.10.39
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server39
-  ansible_host: 10.10.10.40
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server40
-  ansible_host: 10.10.10.41
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server41
-  ansible_host: 10.10.10.42
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server42
-  ansible_host: 10.10.10.43
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server43
-  ansible_host: 10.10.10.44
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server44
-  ansible_host: 10.10.10.45
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server45
-  ansible_host: 10.10.10.46
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server46
-  ansible_host: 10.10.10.47
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server47
-  ansible_host: 10.10.10.48
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server48
-  ansible_host: 10.10.10.49
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
-- server: server49
-  ansible_host: 10.10.10.50
-  ansible_connection: ssh
-  ansible_ssh_user: root
-  ansible_ssh_pass: testpass
-  ansible_become_user: root
-  ansible_become_pass: testpass
+  nic_name: hanaa

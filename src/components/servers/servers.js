@@ -198,10 +198,35 @@ class Servers extends React.Component {
 
   generateAllYaml = () => {
     const state = this.state;
+
+    let serverObject = [];
+
+    state.rows.forEach((row) => {
+      
+      let tempRow = Object.assign({}, row);
+      delete tempRow.name;
+      delete tempRow.ip;
+      delete tempRow.password;
+
+      let object = {
+        server: row.name,
+        ansible_host: row.ip,
+        ansible_connection: 'ssh',
+        ansible_ssh_user: 'root',
+        ansible_ssh_pass: row.password,
+        ansible_become_user: 'root',
+        ansible_become_pass: row.password
+      };
+
+      let mergedObject = {...object, ...tempRow};
+
+      serverObject.push(mergedObject);
+      
+    });
     
     axios.get(`${state.serverURL}/generateAll`,{
         params: {
-          rows: state.rows
+          rows: serverObject
         }
       })
       .then(res => {
